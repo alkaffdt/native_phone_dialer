@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NativeBridgeService {
-  static Future<String> openPhoneDialer() async {
+  static Future<String> openPhoneDialer(String phoneNumber) async {
     try {
       final result = await MethodChannel(
         'com.example/native',
-      ).invokeMethod('openPhoneDialer');
+      ).invokeMethod('openPhoneDialer', {'phoneNumber': phoneNumber});
 
       return result;
     } catch (error) {

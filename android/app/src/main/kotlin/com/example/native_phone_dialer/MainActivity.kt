@@ -1,34 +1,23 @@
-package com.example.native_phone_dialer // ⚠️ SESUAIKAN dengan project kamu
+package com.example.native_phone_dialer
 
-import android.content.Intent
-import android.net.Uri
+import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import com.example.native_phone_dialer.channel.NativeChannelHandler
 
-class MainActivity: FlutterActivity() {
+class MainActivity : FlutterActivity() {
 
     private val CHANNEL = "com.example/native"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
-            .setMethodCallHandler { call, result ->
-
-                if (call.method == "openPhoneDialer") {
-                    val phone = call.argument<String>("phoneNumber") ?: ""
-                    openPhoneDialer(phone)
-                    result.success(null)
-                } else {
-                    result.notImplemented()
-                }
-            }
-    }
-
-    private fun openPhoneDialer(phone: String) {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:$phone")
-        startActivity(intent)
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            CHANNEL
+        ).setMethodCallHandler(
+            NativeChannelHandler(this)
+        )
     }
 }

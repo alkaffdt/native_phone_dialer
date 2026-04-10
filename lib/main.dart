@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _openPhoneDialer() async {
-    final result = await NativeBridgeService.openPhoneDialer('1234567890');
+    final result = await NativeBridgeService.openPhoneDialer();
     debugPrint('result: $result');
   }
 

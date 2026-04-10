@@ -17,7 +17,7 @@ class MainActivity: FlutterActivity() {
             .setMethodCallHandler { call, result ->
 
                 if (call.method == "openPhoneDialer") {
-                    val phone = call.argument<String>("phone") ?: ""
+                    val phone = call.argument<String>("phoneNumber") ?: ""
                     openPhoneDialer(phone)
                     result.success(null)
                 } else {

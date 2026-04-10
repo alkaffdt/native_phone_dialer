@@ -20,27 +20,9 @@ import Flutter
         binaryMessenger: controller.binaryMessenger
       )
 
-      channel.setMethodCallHandler { call, result in
-
-        if call.method == "openPhoneDialer" {
-
-          if let args = call.arguments as? [String: Any],
-             let phone = args["phoneNumber"] as? String {
-
-            if let url = URL(string: "tel:\(phone)") {
-              UIApplication.shared.open(url)
-            }
-
-            result("success")
-
-          } else {
-            result("error")
-          }
-
-        } else {
-          result(FlutterMethodNotImplemented)
-        }
-      }
+      channel.setMethodCallHandler(
+        NativeChannelHandler().handle
+      )
     }
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
